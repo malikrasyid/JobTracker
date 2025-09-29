@@ -11,6 +11,8 @@ async function request(url: string, options?: RequestInit) {
 
 // Jobs APIs
 export const getJobs = () => request(`${API_BASE_URL}/jobs`);
+export const getJobsByStage = (stage: string) =>
+    request(`${API_BASE_URL}/jobs/stage/${stage}`);
 export const getJobById = (id: string ) => request(`${API_BASE_URL}/jobs/${id}`);
 export const createJob = (data: any) =>
     request(`${API_BASE_URL}/jobs`, {
