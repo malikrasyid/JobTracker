@@ -1,29 +1,21 @@
-import { useEffect, useState } from "react"
-import { getJobs } from "../services/api"
-import { ApplicationCard } from "../components/applicationCard"
-
-interface Job {
-  id: string
-  title: string
-  company: string
-  location: string
-  createdAt: string
-}
+import { useEffect } from "react"
+import { useJobStore } from "../services/store"
 
 export function JobList() {
-  const [jobs, setJobs] = useState<Job[]>([])
+  const {jobs, loading, error, fetchJobs} = useJobStore();
 
   useEffect(() => {
-    getJobs().then((data) => {
-      setJobs(data) // assumes API returns an array of jobs
-    })
-  }, [])
+    fetchJobs();
+  }, [fetchJobs]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="grid gap-4">
+    <ul>
       {jobs.map((job) => (
-        <ApplicationCard key={job.id} job={job} />
+        <li key={job.id}>{job.title} ({job.stage})</li>
       ))}
-    </div>
+    </ul>
   )
 }
