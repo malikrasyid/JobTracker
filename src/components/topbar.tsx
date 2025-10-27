@@ -1,22 +1,37 @@
-import { Button } from "../components/ui/button"
-import { Menu } from "lucide-react"
+import type { FC } from "react";
+import { useAuthStore } from "../../store/authStore";
+import { LogOut, Bell, User } from "lucide-react";
 
-interface TopBarProps {
-  onMenuClick: () => void
-}
+const TopBar: FC = () => {
+  const { user, logout } = useAuthStore();
 
-export function TopBar({ onMenuClick }: TopBarProps) {
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4">
-      <div className="flex items-center gap-4">
-        <Button variant="secondary" onClick={onMenuClick} className="lg:hidden">
-          <Menu className="h-5 w-5" />
-        </Button>
+    <header className="flex items-center justify-between h-14 bg-white border-b shadow-sm px-6">
+      {/* Left side: Logo + App Name */}
+      <div className="flex items-center gap-2">
+        <img src="/logo192.png" alt="Logo" className="w-8 h-8" />
+        <span className="font-semibold text-lg text-gray-800">TalentFlow</span>
+      </div>
 
-        <div className="flex items-center gap-4">
-          <h2 className="text-2xl font-semibold text-gray-900">All Applications</h2>
+      {/* Right side: Notification, Profile, Logout */}
+      <div className="flex items-center gap-4">
+        <button className="hover:bg-gray-100 rounded-full p-2">
+          <Bell className="w-5 h-5 text-gray-600" />
+        </button>
+        <div className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1">
+          <User className="w-4 h-4 text-gray-600" />
+          <span className="text-sm text-gray-700">{user?.name || "Guest"}</span>
         </div>
+        <button
+          onClick={logout}
+          className="flex items-center gap-1 text-sm text-red-600 hover:text-red-700"
+        >
+          <LogOut className="w-4 h-4" />
+          Logout
+        </button>
       </div>
     </header>
-  )
-}
+  );
+};
+
+export default TopBar;

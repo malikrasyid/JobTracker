@@ -1,54 +1,35 @@
-import { cn } from "../lib/utils/cn"
-import { Button } from "../components/ui/button"
-import { X, Briefcase, BarChart3, Settings } from "lucide-react"
-import type { MenuItem } from "../types/application"
+import type { FC } from "react";
+import { NavLink } from "react-router-dom";
+import { LayoutDashboard, Workflow, Briefcase, Users } from "lucide-react";
 
-interface SidebarProps {
-  isOpen: boolean
-  onClose: () => void
-}
+const navItems = [
+  { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { path: "/pipelines", label: "Pipelines", icon: Workflow },
+  { path: "/jobs", label: "Jobs", icon: Briefcase },
+  { path: "/candidates", label: "Candidates", icon: Users },
+];
 
-export function Sidebar({ isOpen, onClose }: SidebarProps) {
-  const menuItems: MenuItem[] = [
-    { icon: Briefcase, label: "All Applications", active: true },
-    { icon: BarChart3, label: "Pipelines", active: false },
-    { icon: Settings, label: "Settings", active: false },
-  ]
-
+const SideBar: FC = () => {
   return (
-    <>
-      {/* Overlay for mobile */}
-      {isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden" onClick={onClose} />}
+    <aside className="w-60 bg-white border-r h-[calc(100vh-56px)] flex flex-col py-4">
+      <nav className="flex flex-col gap-1">
+        {navItems.map(({ path, label, icon: Icon }) => (
+          <NavLink
+            key={path}
+            to={path}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-2 rounded-md mx-2 text-gray-700 hover:bg-gray-100 ${
+                isActive ? "bg-gray-200 font-medium" : ""
+              }`
+            }
+          >
+            <Icon className="w-5 h-5" />
+            <span>{label}</span>
+          </NavLink>
+        ))}
+      </nav>
+    </aside>
+  );
+};
 
-      {/* Sidebar */}
-      <div
-        className={cn(
-          "fixed left-0 top-0 z-50 h-full w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0",
-          isOpen ? "translate-x-0" : "-translate-x-full",
-        )}
-      >
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h1 className="text-xl font-semibold text-gray-900">Job Tracker</h1>
-          <Button variant="secondary" onClick={onClose} className="lg:hidden">
-            <X className="h-4 w-4" />
-          </Button>
-        </div>
-
-        <nav className="p-4 space-y-2">
-          {menuItems.map((item) => (
-            <button
-              key={item.label}
-              className={cn(
-                "w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors",
-                item.active ? "bg-gray-100 text-gray-900" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-              )}
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="font-medium">{item.label}</span>
-            </button>
-          ))}
-        </nav>
-      </div>
-    </>
-  )
-}
+export default SideBar;
