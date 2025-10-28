@@ -1,10 +1,21 @@
+import { useAuthStore } from "./store";
+
 const API_BASE_URL = '/api';
 
 // Helper for fetch requests
 async function request(url: string, options?: RequestInit) {
-    const response = await fetch(url, options);
+    const token = useAuthStore.getState().user?.token;
+    const headers = {
+        ...(options?.headers || {}),
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    };
+ 
+    const response = await fetch(url, {...options, headers});
+
     if (!response.ok) {
-        throw new Error(await response.text());
+        const errorText = await response.text();
+        throw new Error(errorText || 'API request failed');
     }
     return response.json();
 }

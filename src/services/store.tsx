@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import * as api from './api';
 
 interface Job {
@@ -48,15 +49,18 @@ interface PipelineState {
   deletePipeline: (id: string) => Promise<void>;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create(persist<AuthState>((set) => ({
   user: null,
   loading: false,
   error: null,
   login: async (data) => {
     set({ loading: true, error: null });
     try {
-      const user = await api.login(data);
-      set({ user, loading: false });
+      const res = await api.login(data);
+      const user = res.user;
+      const token = res.token;
+
+      set({ user: { ...user, token }, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
@@ -64,13 +68,24 @@ export const useAuthStore = create<AuthState>((set) => ({
   register: async (data) => {
     set({ loading: true, error: null });
     try {
-      const user = await api.register(data);
-      set({ user, loading: false });
+      const res = await api.register(data);
+      const user = res.user;
+      const token = res.token;
+
+      set({ user: { ...user, token}, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
   },
   logout: () => set({ user: null }),
+}), {
+  name: 'auth-storage',
+  storage: createJSONStorage(() => localStorage),
+}));
+
+export const useUIStore = create((set) => ({
+  sidebarOpen: true,
+  toggleSidebar: () => set((s: any) => ({ sidebarOpen: !s.sidebarOpen })),
 }));
 
 export const useJobStore = create<JobState>((set) => ({

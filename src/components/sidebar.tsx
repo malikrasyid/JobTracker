@@ -17,7 +17,7 @@ const SideBar: FC = () => {
           <NavLink
             key={path}
             to={path}
-            className={({ isActive }) =>
+            className={({ isActive }: { isActive: boolean }) =>
               `flex items-center gap-3 px-4 py-2 rounded-md mx-2 text-gray-700 hover:bg-gray-100 ${
                 isActive ? "bg-gray-200 font-medium" : ""
               }`
