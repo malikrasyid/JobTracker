@@ -1,12 +1,22 @@
 import * as React from "react"
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {}
+export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  value?: string;
+  onValueChange?: (value: string) => void;
+}
 
 const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
-  ({ className = "", children, ...props }, ref) => {
+  ({ className = "", children, value, onValueChange, onChange, ...props }, ref) => {
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      onValueChange?.(e.target.value);
+      onChange?.(e);
+    };
+
     return (
       <select
         ref={ref}
+        value={value}
+        onChange={handleChange}
         className={`w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white
           focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500
           disabled:cursor-not-allowed disabled:opacity-50 ${className}`}

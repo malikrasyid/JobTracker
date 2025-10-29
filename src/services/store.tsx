@@ -6,6 +6,7 @@ interface Job {
   id: string;
   userId: string;
   pipelineId: string;
+  name: string;
   stage: string;
   company: string;
   role: string;
@@ -33,7 +34,7 @@ interface User {
 }
 
 interface AuthState {
-  user: any | null;
+  user: User | null;
   token: string | null;
   loading: boolean;
   error: string | null;

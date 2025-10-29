@@ -24,7 +24,7 @@ export default function DashboardContent() {
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
-      const matchesSearch = job.title.toLowerCase().includes(search.toLowerCase());
+      const matchesSearch = job.name.toLowerCase().includes(search.toLowerCase());
       const matchesStage = stageFilter === "all" || job.stage === stageFilter;
       const matchesPipeline =
         pipelineFilter === "all" ||
@@ -108,12 +108,12 @@ export default function DashboardContent() {
                 className="hover:shadow-lg hover:border-blue-300 transition-all cursor-pointer"
               >
                 <CardHeader>
-                  <CardTitle>{job.title}</CardTitle>
+                  <CardTitle>{job.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-gray-600">Stage: {job.stage}</p>
-                  {job.pipeline && (
-                    <p className="text-sm text-gray-500">Pipeline: {job.pipeline}</p>
+                  {job.pipelineId && (
+                    <p className="text-sm text-gray-500">Pipeline: {job.pipelineId}</p>
                   )}
                 </CardContent>
               </Card>

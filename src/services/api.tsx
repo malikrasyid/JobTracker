@@ -4,7 +4,8 @@ const API_BASE_URL = '/api';
 
 // Helper for fetch requests
 async function request(url: string, options?: RequestInit) {
-    const token = useAuthStore.getState().user?.token;
+    const token = useAuthStore.getState();
+    
     const headers = {
         ...(options?.headers || {}),
         'Content-Type': 'application/json',
