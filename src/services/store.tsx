@@ -4,19 +4,37 @@ import * as api from './api';
 
 interface Job {
   id: string;
-  title: string;
+  userId: string;
+  pipelineId: string;
   stage: string;
-  // Add other job fields as needed
+  company: string;
+  role: string;
+  location: string;
+  source: string;
+  appliedDate: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface Pipeline {
   id: string;
+  userId: string;
   name: string;
-  // Add other pipeline fields as needed
+  stages: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface User {
+  id: string;
+  email: string;
+  name?: string;
 }
 
 interface AuthState {
   user: any | null;
+  token: string | null;
   loading: boolean;
   error: string | null;
   login: (data: any) => Promise<void>;
@@ -51,16 +69,16 @@ interface PipelineState {
 
 export const useAuthStore = create(persist<AuthState>((set) => ({
   user: null,
+  token: null,
   loading: false,
   error: null,
   login: async (data) => {
     set({ loading: true, error: null });
     try {
       const res = await api.login(data);
-      const user = res.user;
-      const token = res.token;
+      const { user, token } = res
 
-      set({ user: { ...user, token }, loading: false });
+      set({ user, token, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
@@ -69,15 +87,14 @@ export const useAuthStore = create(persist<AuthState>((set) => ({
     set({ loading: true, error: null });
     try {
       const res = await api.register(data);
-      const user = res.user;
-      const token = res.token;
+      const { user, token } = res
 
-      set({ user: { ...user, token}, loading: false });
+      set({ user, token, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
   },
-  logout: () => set({ user: null }),
+  logout: () => set({ user: null, token: null }),
 }), {
   name: 'auth-storage',
   storage: createJSONStorage(() => localStorage),

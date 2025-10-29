@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../services/store";
 import { LogOut, Bell, User } from "lucide-react";
 
 const TopBar: FC = () => {
