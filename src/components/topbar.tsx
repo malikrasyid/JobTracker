@@ -10,7 +10,7 @@ const TopBar: FC = () => {
       {/* Left side: Logo + App Name */}
       <div className="flex items-center gap-2">
         <img src="/logo192.png" alt="Logo" className="w-8 h-8" />
-        <span className="font-semibold text-lg text-gray-800">TalentFlow</span>
+        <span className="font-semibold text-lg text-gray-800">JobTracker</span>
       </div>
 
       {/* Right side: Notification, Profile, Logout */}

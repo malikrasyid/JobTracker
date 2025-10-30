@@ -6,6 +6,7 @@ interface Job {
   id: string;
   userId: string;
   pipelineId: string;
+  pipelineName: string;
   name: string;
   stage: string;
   company: string;

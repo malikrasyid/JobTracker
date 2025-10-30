@@ -28,7 +28,8 @@ export default function DashboardContent() {
       const matchesStage = stageFilter === "all" || job.stage === stageFilter;
       const matchesPipeline =
         pipelineFilter === "all" ||
-        job.pipelineId === pipelineFilter;
+        job.pipelineId === pipelineFilter ||
+        job.pipelineName === pipelineFilter;
 
       return matchesSearch && matchesStage && matchesPipeline;
     });
@@ -113,7 +114,7 @@ export default function DashboardContent() {
                 <CardContent>
                   <p className="text-sm text-gray-600">Stage: {job.stage}</p>
                   {job.pipelineId && (
-                    <p className="text-sm text-gray-500">Pipeline: {job.pipelineId}</p>
+                    <p className="text-sm text-gray-500">Pipeline: {job.pipelineName}</p>
                   )}
                 </CardContent>
               </Card>
