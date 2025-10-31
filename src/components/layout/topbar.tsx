@@ -1,6 +1,7 @@
 import type { FC } from "react";
-import { useAuthStore } from "../services/store";
+import { useAuthStore } from "../../services/store";
 import { LogOut, Bell, User } from "lucide-react";
+import logo from "../assets/jobtracker_logo.png";
 
 const TopBar: FC = () => {
   const { user, logout } = useAuthStore();
@@ -9,7 +10,7 @@ const TopBar: FC = () => {
     <header className="flex items-center justify-between h-14 bg-white border-b shadow-sm px-6">
       {/* Left side: Logo + App Name */}
       <div className="flex items-center gap-2">
-        <img src="/logo192.png" alt="Logo" className="w-8 h-8" />
+        <img src={logo} alt="JobTracker Logo" className="w-8 h-8" />
         <span className="font-semibold text-lg text-gray-800">JobTracker</span>
       </div>
 

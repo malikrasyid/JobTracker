@@ -1,22 +1,22 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Layout from "./components/layout/Layout";
-import Dashboard from "./pages/Dashboard";
-import Jobs from "./pages/Jobs";
-import Pipelines from "./pages/Pipelines";
-import Candidates from "./pages/Candidates";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "../src/components/layout/layout";
+import Dashboard from "../src/pages/Dashboard";
+import Jobs from "../src/pages/Jobs";
+import Pipelines from "../src/pages/Pipelines";
+import Candidates from "../src/pages/Candidates";
 
 export default function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+    <BrowserRouter>
+      <Routes>
+        {/* Layout wraps all main pages */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Dashboard />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/pipelines" element={<Pipelines />} />
           <Route path="/candidates" element={<Candidates />} />
-        </Routes>
-      </Layout>
-    </Router>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
