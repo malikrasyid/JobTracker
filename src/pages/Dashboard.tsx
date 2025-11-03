@@ -1,3 +1,10 @@
+// src/pages/Dashboard.tsx
+import DashboardContent from "../components/layout/dashboardContent";
+
 export default function Dashboard() {
-  return <div className="text-xl font-semibold">Dashboard Overview</div>;
+  return (
+    <div className="h-full">
+      <DashboardContent />
+    </div>
+  );
 }
