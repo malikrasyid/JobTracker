@@ -1,11 +1,11 @@
 import { useAuthStore } from "./store";
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'http://localhost:5027/api';
 
 // Helper for fetch requests
 async function request(url: string, options?: RequestInit) {
-    const token = useAuthStore.getState();
-    
+    const { token } = useAuthStore.getState();
+
     const headers = {
         ...(options?.headers || {}),
         'Content-Type': 'application/json',
@@ -56,19 +56,19 @@ export const login = (data: any) =>
     });
 
 // Pipeline APIs
-export const getPipelines = () => request(`${API_BASE_URL}/pipeline`);
-export const getPipelineById = (id: string ) => request(`${API_BASE_URL}/pipeline/${id}`);
+export const getPipelines = () => request(`${API_BASE_URL}/pipelines`);
+export const getPipelineById = (id: string ) => request(`${API_BASE_URL}/pipelines/${id}`);
 export const createPipeline = (data: any) =>
-    request(`${API_BASE_URL}/pipeline`, {
+    request(`${API_BASE_URL}/pipelines`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const updatePipeline = (id: string , data: any) =>
-    request(`${API_BASE_URL}/pipeline/${id}`, {
+    request(`${API_BASE_URL}/pipelines/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const deletePipeline = (id: string ) =>
-    request(`${API_BASE_URL}/pipeline/${id}`, { method: 'DELETE' });
+    request(`${API_BASE_URL}/pipelines/${id}`, { method: 'DELETE' });

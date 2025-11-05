@@ -30,8 +30,9 @@ interface Pipeline {
 
 interface User {
   id: string;
-  email: string;
+  email?: string;
   name?: string;
+  username?: string;
 }
 
 interface AuthState {
@@ -78,9 +79,14 @@ export const useAuthStore = create(persist<AuthState>((set) => ({
     set({ loading: true, error: null });
     try {
       const res = await api.login(data);
-      const { user, token } = res
+      const token: string | undefined = (res as any)?.token;
+      const userId: string | undefined = (res as any)?.userId ?? (res as any)?.user?.id;
+      const username: string | undefined = (res as any)?.username ?? (res as any)?.user?.username ?? (res as any)?.user?.name;
+      const email: string | undefined = (res as any)?.email ?? (res as any)?.user?.email;
 
-      set({ user, token, loading: false });
+      const user: User | null = userId ? { id: userId, email, name: username, username } : null;
+
+      set({ user, token: token ?? null, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }

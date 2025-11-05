@@ -1,6 +1,8 @@
 import type { FC } from "react";
 import { NavLink } from "react-router-dom";
+import { useUIStore } from "../../services/store";
 import { LayoutDashboard, Workflow, Briefcase, Users } from "lucide-react";
+import "./layout.css";
 
 const navItems = [
   { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -10,21 +12,22 @@ const navItems = [
 ];
 
 const SideBar: FC = () => {
+  const sidebarOpen = useUIStore((s: any) => s.sidebarOpen);
   return (
-    <aside className="w-60 bg-white border-r h-[calc(100vh-56px)] flex flex-col py-4">
-      <nav className="flex flex-col gap-1">
+    <aside className="sidebar h-full bg-white border-r border-gray-200 shadow-sm flex flex-col">
+      <nav className={`flex-1 overflow-y-auto ${sidebarOpen ? 'px-3 py-6 flex flex-col gap-1' : 'px-2 py-3 flex flex-col gap-1'}`}>
         {navItems.map(({ path, label, icon: Icon }) => (
           <NavLink
             key={path}
             to={path}
             className={({ isActive }: { isActive: boolean }) =>
-              `flex items-center gap-3 px-4 py-2 rounded-md mx-2 text-gray-700 hover:bg-gray-100 ${
-                isActive ? "bg-gray-200 font-medium" : ""
-              }`
+              sidebarOpen
+                ? `sidebar-nav-link flex items-center gap-3 px-4 py-2.5 rounded-lg text-gray-700 text-sm ${isActive ? 'active' : ''}`
+                : `sidebar-nav-link flex items-center justify-center py-3 rounded-lg text-gray-700 ${isActive ? 'active' : ''}`
             }
           >
-            <Icon className="w-5 h-5" />
-            <span>{label}</span>
+            <Icon className={`sidebar-nav-icon ${sidebarOpen ? 'w-5 h-5 shrink-0' : 'w-6 h-6'}`} />
+            {sidebarOpen && <span className="truncate">{label}</span>}
           </NavLink>
         ))}
       </nav>
