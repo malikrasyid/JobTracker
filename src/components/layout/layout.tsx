@@ -10,17 +10,15 @@ export default function Layout() {
   const mainContentMargin = sidebarOpen ? 'ml-64' : 'ml-20';
 
   return (
-    <div className="min-h-screen bg-gray-100 font-inter">
+    <div className="min-h-screen bg-gray-50 font-sans">
       <Topbar />
       <Sidebar/>
 
       {/* Main content area */}
       <main className={`pt-16 p-6 transition-all duration-300 ease-in-out ${mainContentMargin}`}>
-        <div className="bg-white rounded-xl shadow-lg p-6 min-h-[calc(100vh-8rem)]">
-          <p className="text-gray-600">
+        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sm:p-6 min-h-[calc(100vh-80px)]">
             <Outlet/>
-          </p>
-          <p className='mt-4 text-sm text-gray-500'>
+          <p className='mt-6 text-sm text-gray-400 border-t pt-4'>
             Current Sidebar State: {sidebarOpen ? 'Open (w-64)' : 'Closed (w-20)'}
           </p>
         </div>

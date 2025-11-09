@@ -32,10 +32,10 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-green-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-5 w-full max-w-sm bg-white p-8 rounded-2xl shadow-xl border border-gray-100"
+        className="flex flex-col gap-5 w-full max-w-sm bg-white p-8 rounded-2xl shadow-2xl border border-gray-100"
       >
         <h2 className="text-3xl font-bold text-center text-gray-800">
           Create Account ✨
@@ -58,7 +58,7 @@ export default function RegisterForm() {
             id="name"
             type="text"
             placeholder="Enter your username"
-            className="border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all rounded-lg p-3 outline-none text-gray-700"
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all rounded-lg p-3 outline-none text-gray-700"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -73,7 +73,7 @@ export default function RegisterForm() {
             id="email"
             type="email"
             placeholder="Enter your email"
-            className="border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all rounded-lg p-3 outline-none text-gray-700"
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all rounded-lg p-3 outline-none text-gray-700"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -91,7 +91,7 @@ export default function RegisterForm() {
             id="password"
             type="password"
             placeholder="Create a strong password"
-            className="border border-gray-300 focus:ring-2 focus:ring-green-400 focus:border-green-400 transition-all rounded-lg p-3 outline-none text-gray-700"
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all rounded-lg p-3 outline-none text-gray-700"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -102,7 +102,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={loading}
-          className={`mt-4 bg-green-600 text-white font-semibold rounded-lg py-3 transition-all hover:bg-green-700 focus:ring-4 focus:ring-green-300 ${
+          className={`mt-4 bg-blue-600 text-white font-semibold rounded-lg py-3 transition-all hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 ${
             loading ? "opacity-70 cursor-not-allowed" : ""
           }`}
         >
@@ -113,7 +113,7 @@ export default function RegisterForm() {
           Already have an account?{" "}
           <a
             href="/login"
-            className="text-green-600 font-medium hover:underline"
+            className="text-blue-600 font-medium hover:underline"
           >
             Login
           </a>

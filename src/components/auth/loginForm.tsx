@@ -30,10 +30,10 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-5 w-full max-w-sm bg-white p-8 rounded-2xl shadow-xl border border-gray-100"
+        className="flex flex-col gap-5 w-full max-w-sm bg-white p-8 rounded-2xl shadow-2xl border border-gray-100" // Increased shadow
       >
         <h2 className="text-3xl font-bold text-center text-gray-800">
           Welcome Back 👋
@@ -50,7 +50,7 @@ export default function LoginForm() {
             id="identifier"
             type="text"
             placeholder="Enter your email or username"
-            className="border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all rounded-lg p-3 outline-none text-gray-700"
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all rounded-lg p-3 outline-none text-gray-700"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             required
@@ -65,7 +65,7 @@ export default function LoginForm() {
             id="password"
             type="password"
             placeholder="Enter your password"
-            className="border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all rounded-lg p-3 outline-none text-gray-700"
+            className="border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all rounded-lg p-3 outline-none text-gray-700"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

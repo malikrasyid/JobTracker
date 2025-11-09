@@ -5,8 +5,8 @@ import { useJobStore } from "../../services/store";
 import { usePipelineStore } from "../../services/store";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { Loader2 } from "lucide-react";
+import { Select } from "../ui/select";
+import { Loader2, Briefcase } from "lucide-react";
 
 export default function DashboardContent() {
   const { jobs, loading: jobLoading, error: jobError, fetchJobs } = useJobStore();
@@ -52,70 +52,67 @@ export default function DashboardContent() {
   const uniqueStages = Array.from(new Set(jobs.map((j) => j.stage)));
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-2 space-y-8">
+      <h1 className="text-2xl font-bold mb-4 text-gray-800">Dashboard Overview</h1>
+      
       {/* Filter Bar */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-          {/* Search */}
-          <Input
-            placeholder="Search job title..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="md:w-64"
-          />
+      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+        <Input
+          placeholder="Search job title..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="md:w-64"
+        />
 
-          {/* Stage Filter */}
-          <Select value={stageFilter} onValueChange={setStageFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by stage" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Stages</SelectItem>
-              {uniqueStages.map((stage) => (
-                <SelectItem key={stage} value={stage}>
-                  {stage}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        {/* Stage Filter (Using the exported Select which is a native select with updated styles) */}
+        <Select value={stageFilter} onValueChange={setStageFilter} className="w-[180px]">
+          <option value="all">All Stages</option>
+          {uniqueStages.map((stage) => (
+            <option key={stage} value={stage}>
+              {stage}
+            </option>
+          ))}
+        </Select>
 
-          {/* Pipeline Filter */}
-          <Select value={pipelineFilter} onValueChange={setPipelineFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by pipeline" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Pipelines</SelectItem>
-              {pipelines.map((pipe) => (
-                <SelectItem key={pipe.id} value={pipe.id}>
-                  {pipe.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Pipeline Filter (Using the exported Select which is a native select with updated styles) */}
+        <Select value={pipelineFilter} onValueChange={setPipelineFilter} className="w-[180px]">
+          <option value="all">All Pipelines</option>
+          {pipelines.map((pipe) => (
+            <option key={pipe.id} value={pipe.id}>
+              {pipe.name}
+            </option>
+          ))}
+        </Select>
       </div>
 
       {/* Jobs Section */}
       <section>
-        <h2 className="text-xl font-semibold mb-4">Jobs</h2>
+        <h2 className="text-xl font-semibold mb-4 text-gray-700">Open Jobs ({filteredJobs.length})</h2>
         {filteredJobs.length === 0 ? (
-          <p className="text-gray-500">No jobs match your filters.</p>
+          <p className="text-gray-500 p-6 border rounded-xl bg-white text-center">No jobs match your filters. Try adjusting your search criteria.</p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredJobs.map((job) => (
               <Card
                 key={job.id}
-                className="hover:shadow-lg hover:border-blue-300 transition-all cursor-pointer"
+                className="cursor-pointer hover:border-blue-400"
               >
                 <CardHeader>
-                  <CardTitle>{job.name}</CardTitle>
+                  <CardTitle className="text-xl">{job.name}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">Stage: {job.stage}</p>
+                <CardContent className="space-y-2">
+                  <p className="text-sm text-gray-600 font-medium">
+                    <span className="text-gray-500">Stage:</span> <span className="text-blue-600 font-semibold">{job.stage}</span>
+                  </p>
                   {job.pipelineId && (
-                    <p className="text-sm text-gray-500">Pipeline: {job.pipelineName}</p>
+                    <p className="text-sm text-gray-500">
+                      <span className="font-medium text-gray-500">Pipeline:</span> {job.pipelineName}
+                    </p>
                   )}
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Briefcase className="w-4 h-4 text-gray-400"/>
+                    <span className="font-medium">{job.company}</span>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -125,18 +122,20 @@ export default function DashboardContent() {
 
       {/* Pipelines Section */}
       <section>
-        <h2 className="text-xl font-semibold mb-4">Pipelines</h2>
+        <h2 className="text-xl font-semibold mb-4 text-gray-700">Pipelines ({pipelines.length})</h2>
         {pipelines.length === 0 ? (
-          <p className="text-gray-500">No pipelines available.</p>
+          <p className="text-gray-500 p-6 border rounded-xl bg-white text-center">No pipelines available.</p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {pipelines.map((pipe) => (
-              <Card key={pipe.id} className="hover:shadow-lg transition-all">
+              <Card key={pipe.id} className="cursor-default">
                 <CardHeader>
-                  <CardTitle>{pipe.name}</CardTitle>
+                  <CardTitle className="text-xl">{pipe.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600">ID: {pipe.id}</p>
+                  <p className="text-sm text-gray-500">
+                    <span className="font-medium text-gray-500">ID:</span> {pipe.id}
+                  </p>
                 </CardContent>
               </Card>
             ))}

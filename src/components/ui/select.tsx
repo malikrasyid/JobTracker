@@ -18,7 +18,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         value={value}
         onChange={handleChange}
         className={`w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white
-          focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500
+          focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
           disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
         {...props}
       >
@@ -36,7 +36,7 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
       ref={ref}
       type="button"
       className={`flex items-center justify-between w-full rounded-md border border-gray-300 px-3 py-2 text-sm bg-white
-        hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500 ${className}`}
+        hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
       {...props}
     >
       {children}
@@ -66,7 +66,7 @@ const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
   ({ className = "", children, ...props }, ref) => (
     <div
       ref={ref}
-      className={`mt-1 w-full rounded-md border border-gray-200 bg-white shadow-sm overflow-auto max-h-60 ${className}`}
+      className={`absolute z-10 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-xl overflow-hidden max-h-60 ${className}`}
       {...props}
     >
       {children}
@@ -83,7 +83,7 @@ const SelectItem = React.forwardRef<HTMLButtonElement, SelectItemProps>(
     <button
       ref={ref}
       type="button"
-      className={`w-full text-left px-3 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 ${className}`}
+      className={`w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-50 ${className}`}      
       {...props}
     >
       {children}

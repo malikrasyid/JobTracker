@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePipelineStore } from "../../services/store";
-import { Loader2, Plus, Trash2, Edit2 } from "lucide-react";
+import { Loader2, Plus, Trash2, Edit2, LayoutDashboard } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -60,80 +60,85 @@ export default function PipelineContent() {
       </div>
     );
 
-  return (
-    <div className="space-y-6">
-      {/* ➕ Add New Pipeline */}
-      <div className="flex items-center gap-3">
-        <Input
-          placeholder="New pipeline name"
-          value={newPipelineName}
-          onChange={(e) => setNewPipelineName(e.target.value)}
-          className="w-64"
-        />
-        <Button onClick={handleCreate} className="flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Add Pipeline
-        </Button>
-      </div>
-
-      {/* 🧱 Pipeline List */}
-      {pipelines.length === 0 ? (
-        <div className="text-gray-500 text-center py-10">
-          No pipelines found. A <span className="font-semibold">default pipeline</span> will be created automatically.
+    return (
+      <div className="space-y-6">
+        {/* ➕ Add New Pipeline - Improved grouping and background */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+          <Input
+            placeholder="Enter new pipeline name"
+            value={newPipelineName}
+            onChange={(e) => setNewPipelineName(e.target.value)}
+            className="w-full sm:w-64"
+          />
+          <Button onClick={handleCreate} className="flex items-center gap-2 w-full sm:w-auto">
+            <Plus className="w-4 h-4" /> Add Pipeline
+          </Button>
         </div>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {pipelines.map((pipe: any) => (
-            <Card key={pipe.id} className="hover:shadow-lg transition-all">
-              <CardHeader className="flex justify-between items-center">
-                {editingId === pipe.id ? (
-                  <Input
-                    value={editingName}
-                    onChange={(e) => setEditingName(e.target.value)}
-                    className="w-full"
-                  />
-                ) : (
-                  <CardTitle>{pipe.name}</CardTitle>
-                )}
-              </CardHeader>
-              <CardContent className="flex justify-between items-center mt-3">
-                <div className="text-sm text-gray-600">
-                  ID: <span className="text-gray-500">{pipe.id}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
+  
+        {/* 🧱 Pipeline List */}
+        {pipelines.length === 0 ? (
+          <p className="text-gray-500 text-center py-10 p-6 border rounded-xl bg-white">
+            No pipelines found. A <span className="font-semibold text-blue-600">default pipeline</span> will be created automatically.
+          </p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {pipelines.map((pipe: any) => (
+              <Card key={pipe.id} className="group hover:border-blue-400">
+                <CardHeader className="flex-row items-center justify-between p-4">
                   {editingId === pipe.id ? (
-                    <Button
-                      size="sm"
-                      onClick={() => handleUpdate(pipe.id)}
-                      className="text-xs"
-                    >
-                      Save
-                    </Button>
+                    <Input
+                      value={editingName}
+                      onChange={(e) => setEditingName(e.target.value)}
+                      className="w-full"
+                    />
                   ) : (
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <LayoutDashboard className="w-5 h-5 text-blue-600" />
+                      <span className="truncate">{pipe.name}</span>
+                    </CardTitle>
+                  )}
+                </CardHeader>
+                <CardContent className="flex justify-between items-center p-4 pt-0">
+                  <div className="text-sm text-gray-500">
+                    ID: <span className="font-mono text-xs">{pipe.id.substring(0, 8)}...</span>
+                  </div>
+  
+                  <div className="flex items-center gap-1">
+                    {editingId === pipe.id ? (
+                      <Button
+                        size="sm"
+                        onClick={() => handleUpdate(pipe.id)}
+                        className="text-xs"
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setEditingId(pipe.id);
+                          setEditingName(pipe.name);
+                        }}
+                        title="Edit Pipeline"
+                      >
+                        <Edit2 className="w-4 h-4 text-gray-500 hover:text-blue-600" />
+                      </Button>
+                    )}
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => {
-                        setEditingId(pipe.id);
-                        setEditingName(pipe.name);
-                      }}
+                      onClick={() => handleDelete(pipe.id)}
+                      title="Delete Pipeline"
                     >
-                      <Edit2 className="w-4 h-4 text-gray-600" />
+                      <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />
                     </Button>
-                  )}
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDelete(pipe.id)}
-                  >
-                    <Trash2 className="w-4 h-4 text-red-500" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    );
 }

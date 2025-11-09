@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useJobStore } from "../../services/store";
-import { Loader2, Plus, Edit2, Trash2 } from "lucide-react";
+import { Loader2, Plus, Edit2, Trash2, Briefcase, MapPin, Tag, Workflow, LayoutDashboard } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../ui/select";
+import { Select } from "../ui/select";
 
 export default function JobsContent() {
   const {
@@ -90,125 +90,145 @@ export default function JobsContent() {
       </div>
     );
 
-  return (
-    <div className="p-6 space-y-6">
-      {/* Filters */}
-      <div className="flex flex-col md:flex-row justify-between gap-4">
-        <div className="flex gap-3">
-          <Input
-            placeholder="Search by job name..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-64"
-          />
-          <Select value={stageFilter} onValueChange={setStageFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by stage" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Stages</SelectItem>
+    return (
+      <div className="p-2 space-y-6">
+        {/* Filters & Add Button */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+          <div className="flex gap-3 w-full md:w-auto">
+            <Input
+              placeholder="Search by job name..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full md:w-64"
+            />
+            <Select value={stageFilter} onValueChange={setStageFilter} className="w-[180px] shrink-0">
+              <option value="all">All Stages</option>
               {uniqueStages.map((stage) => (
-                <SelectItem key={stage} value={stage}>
+                <option key={stage} value={stage}>
                   {stage}
-                </SelectItem>
+                </option>
               ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <Button onClick={() => setCreating(true)} className="flex items-center gap-2">
-          <Plus className="w-4 h-4" /> Add Job
-        </Button>
-      </div>
-
-      {/* Create New Job Form */}
-      {creating && (
-        <div className="p-4 border rounded-lg bg-gray-50">
-          <h3 className="font-semibold mb-2">New Job</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <Input placeholder="Job Name" value={newJob.name}
-              onChange={(e) => setNewJob({ ...newJob, name: e.target.value })} />
-            <Input placeholder="Company" value={newJob.company}
-              onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
-            <Input placeholder="Role" value={newJob.role}
-              onChange={(e) => setNewJob({ ...newJob, role: e.target.value })} />
-            <Input placeholder="Location" value={newJob.location}
-              onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
-            <Input placeholder="Stage" value={newJob.stage}
-              onChange={(e) => setNewJob({ ...newJob, stage: e.target.value })} />
-            <Input placeholder="Source" value={newJob.source}
-              onChange={(e) => setNewJob({ ...newJob, source: e.target.value })} />
+            </Select>
           </div>
-          <div className="flex justify-end gap-3 mt-4">
-            <Button variant="ghost" onClick={() => setCreating(false)}>Cancel</Button>
-            <Button onClick={handleCreate}>Save</Button>
-          </div>
+  
+          <Button 
+            onClick={() => setCreating(true)} 
+            className="flex items-center gap-2 w-full md:w-auto"
+          >
+            <Plus className="w-4 h-4" /> Add Job
+          </Button>
         </div>
-      )}
-
-      {/* Job Cards */}
-      {filteredJobs.length === 0 ? (
-        <p className="text-gray-500 text-center">No jobs found.</p>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filteredJobs.map((job) => (
-            <Card
-              key={job.id}
-              className="hover:shadow-lg hover:border-blue-300 transition-all cursor-pointer"
-            >
-              <CardHeader className="flex justify-between items-center">
-                {editingId === job.id ? (
-                  <Input
-                    value={editingJob?.name}
-                    onChange={(e) =>
-                      setEditingJob({ ...editingJob, name: e.target.value })
-                    }
-                  />
-                ) : (
-                  <CardTitle>{job.name}</CardTitle>
-                )}
-              </CardHeader>
-
-              <CardContent className="space-y-1 text-sm text-gray-600">
-                <p><span className="font-medium">Company:</span> {job.company}</p>
-                <p><span className="font-medium">Role:</span> {job.role}</p>
-                <p><span className="font-medium">Stage:</span> {job.stage}</p>
-                <p><span className="font-medium">Location:</span> {job.location}</p>
-                <p><span className="font-medium">Pipeline:</span> {job.pipelineName}</p>
-                <div className="flex justify-end gap-2 mt-3">
+  
+        {/* Create New Job Form - Used Card and blue-50 background for visual style */}
+        {creating && (
+          <Card className="p-6 bg-blue-50/50 border-blue-200">
+            <h3 className="text-xl font-semibold mb-4 text-blue-700">New Job Application</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <Input placeholder="Job Name" value={newJob.name}
+                onChange={(e) => setNewJob({ ...newJob, name: e.target.value })} />
+              <Input placeholder="Company" value={newJob.company}
+                onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
+              <Input placeholder="Role" value={newJob.role}
+                onChange={(e) => setNewJob({ ...newJob, role: e.target.value })} />
+              <Input placeholder="Location" value={newJob.location}
+                onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
+              <Input placeholder="Stage" value={newJob.stage}
+                onChange={(e) => setNewJob({ ...newJob, stage: e.target.value })} />
+              <Input placeholder="Source" value={newJob.source}
+                onChange={(e) => setNewJob({ ...newJob, source: e.target.value })} />
+            </div>
+            <div className="flex justify-end gap-3 mt-6">
+              <Button variant="outline" onClick={() => setCreating(false)}>Cancel</Button>
+              <Button onClick={handleCreate}>Save Job</Button>
+            </div>
+          </Card>
+        )}
+  
+        {/* Job Cards */}
+        {filteredJobs.length === 0 ? (
+          <p className="text-gray-500 text-center p-6 border rounded-xl bg-white">No jobs found matching your criteria.</p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredJobs.map((job) => (
+              <Card
+                key={job.id}
+                className="group hover:border-blue-400"
+              >
+                <CardHeader className="p-4 flex-row items-center justify-between">
                   {editingId === job.id ? (
-                    <Button
-                      size="sm"
-                      onClick={() => handleUpdate(job.id)}
-                      className="text-xs"
-                    >
-                      Save
-                    </Button>
+                    <Input
+                      value={editingJob?.name}
+                      onChange={(e) =>
+                        setEditingJob({ ...editingJob, name: e.target.value })
+                      }
+                      className="w-full"
+                    />
                   ) : (
+                    <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">{job.name}</CardTitle>
+                  )}
+                  
+                  {/* Action Buttons are moved to the header and hidden until hover for a cleaner look */}
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {editingId === job.id ? (
+                      <Button
+                        size="sm"
+                        onClick={() => handleUpdate(job.id)}
+                        className="text-xs"
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => {
+                          setEditingId(job.id);
+                          setEditingJob(job);
+                        }}
+                        title="Edit Job"
+                      >
+                        <Edit2 className="w-4 h-4 text-gray-500 hover:text-blue-600" />
+                      </Button>
+                    )}
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => {
-                        setEditingId(job.id);
-                        setEditingJob(job);
-                      }}
+                      onClick={() => handleDelete(job.id)}
+                      title="Delete Job"
                     >
-                      <Edit2 className="w-4 h-4 text-gray-600" />
+                      <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />
                     </Button>
+                  </div>
+                </CardHeader>
+  
+                <CardContent className="space-y-2 p-4 pt-0 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Company:</span> {job.company}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Role:</span> {job.role}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Workflow className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Stage:</span> <span className="text-blue-600 font-semibold">{job.stage}</span></p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Location:</span> {job.location}</p>
+                  </div>
+                  {job.pipelineName && (
+                    <div className="flex items-center gap-2">
+                      <LayoutDashboard className="w-4 h-4 text-gray-400 shrink-0" />
+                      <p className="truncate"><span className="font-medium text-gray-800">Pipeline:</span> {job.pipelineName}</p>
+                    </div>
                   )}
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDelete(job.id)}
-                  >
-                    <Trash2 className="w-4 h-4 text-red-500" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    );
 }

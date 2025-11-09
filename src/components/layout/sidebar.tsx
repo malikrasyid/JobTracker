@@ -16,7 +16,7 @@ const SideBar = () => {
   return (
     <aside 
     className={`h-screen fixed left-0 top-0 z-20 
-      bg-gray-50 border-r border-gray-200 shadow-xl 
+      bg-white border-r border-gray-200 shadow-xl 
       flex flex-col transition-all duration-300 ease-in-out ${sidebarWidth}`}
     >
       

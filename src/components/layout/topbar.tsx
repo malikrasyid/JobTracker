@@ -19,9 +19,9 @@ const TopBar= () => {
           type="button"
           onClick={toggleSidebar}
           aria-label="Toggle sidebar"
-          className="rounded-xl border border-gray-300 hover:bg-gray-100 w-10 h-10 flex items-center justify-center transition-colors duration-150"
+          className="rounded-lg border border-gray-300 bg-gray-50 hover:bg-gray-100 w-9 h-9 flex items-center justify-center transition-colors duration-150 shrink-0"        
         >
-          {sidebarOpen ? <X className="w-6 h-6 text-gray-700" /> : <Menu className="w-6 h-6 text-gray-700" />}
+          {sidebarOpen ? <X className="w-5 h-5 text-gray-600" /> : <Menu className="w-5 h-5 text-gray-600" />}
         </button>
         <img 
           src={logo} 
@@ -33,17 +33,17 @@ const TopBar= () => {
 
       {/* Right side: Notification, Profile, Logout */}
       <div className="flex items-center gap-3">
-        <button className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors duration-150" aria-label="Notifications">
+        <button className="flex items-center justify-center w-9 h-9 rounded-lg hover:bg-gray-100 transition-colors duration-150" aria-label="Notifications">
           <Bell className="w-5 h-5 text-gray-600" />
         </button>
-        <div className="flex items-center gap-2 bg-gray-50 rounded-full pl-3 pr-4 py-1.5 border border-gray-200 cursor-default">
-          <div className="w-6 h-6 rounded-full bg-indigo-100 flex items-center justify-center">
-            <User className="w-4 h-4 text-indigo-600" />
+        <div className="hidden sm:flex items-center gap-2 bg-blue-50 rounded-full pl-3 pr-4 py-1.5 border border-blue-200 cursor-default">
+          <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
+            <User className="w-4 h-4 text-white" />
           </div>
-          <span className="text-sm font-semibold text-gray-700 hidden md:inline">{user?.name}</span>
+          <span className="text-sm font-semibold text-blue-700">{user?.name}</span>
         </div>
         <button 
-          className="flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors duration-150" 
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors duration-150"
           onClick={logout} 
           role="button" 
           aria-label="Logout"
