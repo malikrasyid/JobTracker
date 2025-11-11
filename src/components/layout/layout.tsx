@@ -7,7 +7,7 @@ import "./layout.css";
 
 export default function Layout() {
   const sidebarOpen = useUIStore((state: any) => state.sidebarOpen); 
-  const mainContentMargin = sidebarOpen ? 'ml-64' : 'ml-20';
+  const mainContentMargin = sidebarOpen ? 'lg:ml-64' : 'lg:ml-20';
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
@@ -15,9 +15,9 @@ export default function Layout() {
       <Sidebar/>
 
       {/* Main content area */}
-      <main className={`pt-16 p-6 transition-all duration-300 ease-in-out ${mainContentMargin}`}>
-        <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sm:p-6 min-h-[calc(100vh-80px)]">
-            <Outlet/>
+      <main className={`layout-main pt-16 p-4 lg:p-6 transition-all duration-300 ease-in-out ${mainContentMargin}`}>
+        <div className="p-0"> 
+          <Outlet/>
           <p className='mt-6 text-sm text-gray-400 border-t pt-4'>
             Current Sidebar State: {sidebarOpen ? 'Open (w-64)' : 'Closed (w-20)'}
           </p>

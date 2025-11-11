@@ -56,7 +56,7 @@ export default function DashboardContent() {
       <h1 className="text-2xl font-bold mb-4 text-gray-800">Dashboard Overview</h1>
       
       {/* Filter Bar */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 p-4 bg-gray-50 rounded-xl border border-gray-100">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 p-4 rounded-xl">
         <Input
           placeholder="Search job title..."
           value={search}

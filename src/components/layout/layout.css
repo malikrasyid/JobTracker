@@ -150,6 +150,13 @@
   transform: scale(1.1);
 }
 
+.layout-main {
+  position: relative;
+  height: calc(100vh - 64px); /* below topbar */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 /* Layout Container */
 .layout-container {
   width: 100%;
@@ -157,7 +164,6 @@
   display: flex !important;
   flex-direction: row !important;
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-  overflow: hidden;
   position: relative;
   box-sizing: border-box;
 }
@@ -168,7 +174,6 @@
   min-width: 0;
   padding-top: 64px; /* matches topbar height */
   height: calc(100vh - 64px);
-  overflow: hidden;
   transition: margin-left 0.2s ease;
 }
 
