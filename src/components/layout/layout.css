@@ -96,7 +96,6 @@
   position: relative;
   transition: all 0.2s ease;
   margin: 0 0.5rem;
-  border-radius: 0.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -172,7 +171,7 @@
   position: relative;
   flex: 1 1 auto;
   min-width: 0;
-  padding-top: 64px; /* matches topbar height */
+  padding-top: 64px; 
   height: calc(100vh - 64px);
   transition: margin-left 0.2s ease;
 }
@@ -258,6 +257,62 @@
 .sidebar-exit {
   animation: slideOut 0.3s ease-in;
 }
+
+/* Unified Interactive Button (Topbar + Sidebar) */
+.ui-item {
+  position: relative;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Hover animation */
+.ui-item:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Pressed animation */
+.ui-item:active {
+  transform: scale(0.96);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Icon animation */
+.ui-item svg {
+  transition: transform 0.25s ease;
+}
+
+.ui-item:hover svg {
+  transform: scale(1.12);
+}
+
+/* Active (selected) state */
+.ui-item.active {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.05));
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.ui-item.active:hover {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.16), rgba(59, 130, 246, 0.08));
+}
+
+/* Left highlight bar (optional) */
+.ui-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 70%;
+  background-color: #2563eb;
+  border-radius: 2px;
+}
+
 
 @keyframes slideIn {
   from {

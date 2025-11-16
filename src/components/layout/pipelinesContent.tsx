@@ -63,7 +63,7 @@ export default function PipelineContent() {
     return (
       <div className="space-y-6">
         {/* ➕ Add New Pipeline - Improved grouping and background */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-100">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-gray-50 rounded-xl">
           <Input
             placeholder="Enter new pipeline name"
             value={newPipelineName}

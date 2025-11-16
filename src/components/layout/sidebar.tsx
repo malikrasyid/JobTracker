@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useUIStore } from "../../services/store";
-import { LayoutDashboard, Workflow, Briefcase, Users, Menu, X, Bell } from "lucide-react";
+import { LayoutDashboard, Workflow, Briefcase, Users } from "lucide-react";
 import "./layout.css";
 
 const navItems = [
@@ -13,41 +13,40 @@ const navItems = [
 const SideBar = () => {
   const { sidebarOpen }: any = useUIStore();
   
-  // Use explicit conditional widths with lg: for desktop behavior
-  const desktopWidth = sidebarOpen ? 'lg:w-64' : 'lg:w-20';
-  
-  // Mobile visibility: slide out by default, slide in when opened. Always show on desktop.
-  const mobileToggle = sidebarOpen ? 'translate-x-0' : '-translate-x-full';
+  const sidebarWidth = sidebarOpen ? 'w-60' : 'w-16';
 
   return (
     <aside 
-    className={`fixed left-0 top-16 bottom-0 z-30 w-64
+    className={`fixed left-0 top-16 bottom-0 z-30
       bg-gray-50
       flex flex-col transition-all duration-300 ease-in-out
-      ${desktopWidth} ${mobileToggle} lg:translate-x-0`}
+      ${sidebarWidth}`}
     >
        
-      <nav className="flex-1 overflow-y-auto flex flex-col gap-1 px-3 py-1">
+      <nav className="flex-1 overflow-y-auto flex flex-col gap-1 p-3">
                 {navItems.map(({ path, label, icon: Icon }) => (
                     <NavLink
                         key={path}
                         to={path}
                         className={({ isActive }: any) =>
-                            `sidebar-nav-link flex items-center 
-                            rounded-xl text-gray-600 hover:bg-gray-100 
-                            font-medium transition-colors duration-150 
-                            ${isActive ? 'active' : ''} 
+                            `flex items-center gap-3 px-4 py-2 rounded-lg 
+                            text-gray-700 no-underline 
+                            hover:bg-gray-200 hover:text-gray-900 
+                            focus:outline-none focus:ring-0 
+                            active:text-gray-900 
+                            visited:text-gray-700
+                            ${isActive ? 'bg-gray-200 text-gray-900 font-semibold' : ''} 
                             ${
                                 sidebarOpen 
-                                    ? 'gap-3 px-4 py-2.5 text-base'
+                                    ? 'gap-3 px-1 py-2 text-base'
                                     : 'justify-center py-2' 
                             }`
                         }
                     >
                         {/* Icon Size is now unified: w-6 h-6 */}
-                        <Icon className="sidebar-nav-icon w-6 h-6 shrink-0" />
+                        <Icon className="sidebar-nav-icon w-6 h-6 shrink-0 text-gray-600"/>
                         
-                        {sidebarOpen && <span className="truncate">{label}</span>}
+                        {sidebarOpen && <span className="truncate text-gray-600 px-3">{label}</span>}
                     </NavLink>
                 ))}
             </nav>

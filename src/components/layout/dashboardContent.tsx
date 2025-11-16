@@ -52,11 +52,9 @@ export default function DashboardContent() {
   const uniqueStages = Array.from(new Set(jobs.map((j) => j.stage)));
 
   return (
-    <div className="p-2 space-y-8">
-      <h1 className="text-2xl font-bold mb-4 text-gray-800">Dashboard Overview</h1>
-      
+    <div className="space-y-6">      
       {/* Filter Bar */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 p-4 rounded-xl">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
         <Input
           placeholder="Search job title..."
           value={search}
