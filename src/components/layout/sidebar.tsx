@@ -17,19 +17,19 @@ const SideBar = () => {
 
   return (
     <aside 
-    className={`fixed left-0 top-16 bottom-0 z-30
+    className={`fixed left-0 top-14 bottom-0 z-30
       bg-gray-50
       flex flex-col transition-all duration-300 ease-in-out
       ${sidebarWidth}`}
     >
        
-      <nav className="flex-1 overflow-y-auto flex flex-col gap-1 p-3">
+      <nav className="flex-1 overflow-y-auto flex flex-col px-1 py-1">
                 {navItems.map(({ path, label, icon: Icon }) => (
                     <NavLink
                         key={path}
                         to={path}
                         className={({ isActive }: any) =>
-                            `flex items-center gap-3 px-4 py-2 rounded-lg 
+                            `flex items-center gap-3 mx-2 my-1 rounded-lg 
                             text-gray-700 no-underline 
                             hover:bg-gray-200 hover:text-gray-900 
                             focus:outline-none focus:ring-0 
@@ -38,7 +38,7 @@ const SideBar = () => {
                             ${isActive ? 'bg-gray-200 text-gray-900 font-semibold' : ''} 
                             ${
                                 sidebarOpen 
-                                    ? 'gap-3 px-1 py-2 text-base'
+                                    ? 'gap-3 px-2 py-2 text-base'
                                     : 'justify-center py-2' 
                             }`
                         }

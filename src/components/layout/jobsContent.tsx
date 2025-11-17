@@ -93,7 +93,7 @@ export default function JobsContent() {
     return (
       <div className="space-y-6">
         {/* Filters & Add Button */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 bg-gray-50 rounded-xl">
+        <div className="flex flex-col bg-white md:flex-row justify-between items-center gap-4 bg-gray-50 rounded-xl">
           <div className="flex gap-3 w-full md:w-auto">
             <Input
               placeholder="Search by job name..."

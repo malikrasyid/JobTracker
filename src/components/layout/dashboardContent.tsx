@@ -54,7 +54,7 @@ export default function DashboardContent() {
   return (
     <div className="space-y-6">      
       {/* Filter Bar */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
+      <div className="flex flex-col bg-white md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
         <Input
           placeholder="Search job title..."
           value={search}
