@@ -34,23 +34,23 @@ export const Button: React.FC<ButtonProps> = ({
   switch (variant) {
     case "primary":
       variantStyles =
-        "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500";
+        "bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-600";
       break;
     case "secondary":
       variantStyles =
-        "bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400";
+        "bg-blue-100 text-gray-800 hover:bg-blue-200 focus:ring-blue-300";
       break;
     case "outline":
       variantStyles =
-        "border border-gray-400 text-gray-800 hover:bg-gray-100 focus:ring-gray-400";
+        "border border-blue-300 text-gray-800 hover:bg-gray-50 focus:ring-blue-500";
       break;
     case "ghost":
       variantStyles =
-        "bg-transparent text-gray-800 hover:bg-gray-50 focus:ring-gray-300";
+        "bg-transparent text-gray-800 hover:bg-gray-50/50 focus:ring-blue-300";
       break;
     default:
       variantStyles =
-        "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500";
+        "bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-600";
   }
 
   return (

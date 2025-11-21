@@ -54,33 +54,35 @@ export default function DashboardContent() {
   return (
     <div className="space-y-6">      
       {/* Filter Bar */}
-      <div className="flex flex-col bg-white md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
         <Input
           placeholder="Search job title..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="md:w-64"
+          className="md:flex-1 w-full bg-white"
         />
 
+        <div className="flex gap-4">
         {/* Stage Filter (Using the exported Select which is a native select with updated styles) */}
-        <Select value={stageFilter} onValueChange={setStageFilter} className="w-[180px]">
-          <option value="all">All Stages</option>
-          {uniqueStages.map((stage) => (
-            <option key={stage} value={stage}>
-              {stage}
-            </option>
-          ))}
-        </Select>
+          <Select value={stageFilter} onValueChange={setStageFilter} className="w-[180px]">
+            <option value="all">All Stages</option>
+            {uniqueStages.map((stage) => (
+              <option key={stage} value={stage}>
+                {stage}
+              </option>
+            ))}
+          </Select>
 
-        {/* Pipeline Filter (Using the exported Select which is a native select with updated styles) */}
-        <Select value={pipelineFilter} onValueChange={setPipelineFilter} className="w-[180px]">
-          <option value="all">All Pipelines</option>
-          {pipelines.map((pipe) => (
-            <option key={pipe.id} value={pipe.id}>
-              {pipe.name}
-            </option>
-          ))}
-        </Select>
+          {/* Pipeline Filter (Using the exported Select which is a native select with updated styles) */}
+          <Select value={pipelineFilter} onValueChange={setPipelineFilter} className="w-[180px]">
+            <option value="all">All Pipelines</option>
+            {pipelines.map((pipe) => (
+              <option key={pipe.id} value={pipe.id}>
+                {pipe.name}
+              </option>
+            ))}
+          </Select>
+        </div>
       </div>
 
       {/* Jobs Section */}
@@ -89,30 +91,30 @@ export default function DashboardContent() {
         {filteredJobs.length === 0 ? (
           <p className="text-gray-500 p-6 border rounded-xl bg-white text-center">No jobs match your filters. Try adjusting your search criteria.</p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredJobs.map((job) => (
-              <Card
-                key={job.id}
-                className="cursor-pointer hover:border-blue-400"
-              >
-                <CardHeader>
-                  <CardTitle className="text-xl">{job.name}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <p className="text-sm text-gray-600 font-medium">
-                    <span className="text-gray-500">Stage:</span> <span className="text-blue-600 font-semibold">{job.stage}</span>
-                  </p>
-                  {job.pipelineId && (
-                    <p className="text-sm text-gray-500">
-                      <span className="font-medium text-gray-500">Pipeline:</span> {job.pipelineName}
+                <Card
+                  key={job.id}
+                  className="cursor-pointer hover:border-blue-400"
+                >
+                  <CardHeader>
+                    <CardTitle className="text-xl">{job.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <p className="text-sm text-gray-600 font-medium">
+                      <span className="text-gray-500">Stage:</span> <span className="text-blue-600 font-semibold">{job.stage}</span>
                     </p>
-                  )}
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Briefcase className="w-4 h-4 text-gray-400"/>
-                    <span className="font-medium">{job.company}</span>
-                  </div>
-                </CardContent>
-              </Card>
+                    {job.pipelineId && (
+                      <p className="text-sm text-gray-500">
+                        <span className="font-medium text-gray-500">Pipeline:</span> {job.pipelineName}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Briefcase className="w-4 h-4 text-gray-400"/>
+                      <span className="font-medium">{job.company}</span>
+                    </div>
+                  </CardContent>
+                </Card>
             ))}
           </div>
         )}
@@ -124,18 +126,18 @@ export default function DashboardContent() {
         {pipelines.length === 0 ? (
           <p className="text-gray-500 p-6 border rounded-xl bg-white text-center">No pipelines available.</p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {pipelines.map((pipe) => (
-              <Card key={pipe.id} className="cursor-default">
-                <CardHeader>
-                  <CardTitle className="text-xl">{pipe.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-500">
-                    <span className="font-medium text-gray-500">ID:</span> {pipe.id}
-                  </p>
-                </CardContent>
-              </Card>
+                <Card key={pipe.id} className="cursor-default">
+                  <CardHeader>
+                    <CardTitle className="text-xl">{pipe.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-500">
+                      <span className="font-medium text-gray-500">ID:</span> {pipe.id}
+                    </p>
+                  </CardContent>
+                </Card>
             ))}
           </div>
         )}

@@ -13,7 +13,7 @@ const navItems = [
 const SideBar = () => {
   const { sidebarOpen }: any = useUIStore();
   
-  const sidebarWidth = sidebarOpen ? 'w-60' : 'w-16';
+  const sidebarWidth = sidebarOpen ? 'w-56' : 'w-16';
 
   return (
     <aside 

@@ -63,14 +63,14 @@ export default function PipelineContent() {
     return (
       <div className="space-y-6">
         {/* ➕ Add New Pipeline - Improved grouping and background */}
-        <div className="flex flex-col bg-white sm:flex-row items-start sm:items-center gap-3 bg-gray-50 rounded-xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-gray-50 rounded-xl">
           <Input
             placeholder="Enter new pipeline name"
             value={newPipelineName}
             onChange={(e) => setNewPipelineName(e.target.value)}
-            className="w-full sm:w-64"
+            className="w-full bg-white sm:w-64"
           />
-          <Button onClick={handleCreate} className="flex items-center gap-2 w-full sm:w-auto">
+          <Button onClick={handleCreate} variant="secondary" className="flex items-center gap-2 w-full sm:w-auto">
             <Plus className="w-4 h-4" /> Add Pipeline
           </Button>
         </div>
@@ -81,9 +81,9 @@ export default function PipelineContent() {
             No pipelines found. A <span className="font-semibold text-blue-600">default pipeline</span> will be created automatically.
           </p>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {pipelines.map((pipe: any) => (
-              <Card key={pipe.id} className="group hover:border-blue-400">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {pipelines.map((pipe) => (
+              <Card key={pipe.id} className="cursor-pointer hover:border-blue-400">
                 <CardHeader className="flex-row items-center justify-between p-4">
                   {editingId === pipe.id ? (
                     <Input
@@ -92,9 +92,8 @@ export default function PipelineContent() {
                       className="w-full"
                     />
                   ) : (
-                    <CardTitle className="text-xl flex items-center gap-2">
-                      <LayoutDashboard className="w-5 h-5 text-blue-600" />
-                      <span className="truncate">{pipe.name}</span>
+                    <CardTitle className="text-xl">
+                      {pipe.name}
                     </CardTitle>
                   )}
                 </CardHeader>

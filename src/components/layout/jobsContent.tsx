@@ -93,30 +93,30 @@ export default function JobsContent() {
     return (
       <div className="space-y-6">
         {/* Filters & Add Button */}
-        <div className="flex flex-col bg-white md:flex-row justify-between items-center gap-4 bg-gray-50 rounded-xl">
-          <div className="flex gap-3 w-full md:w-auto">
+        <div className="flex flex-col md:flex-row md:justify-start md:items-center gap-4 bg-gray-50 rounded-xl">
             <Input
               placeholder="Search by job name..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full md:w-64"
+              className="w-full bg-white md:flex-1"
             />
-            <Select value={stageFilter} onValueChange={setStageFilter} className="w-[180px] shrink-0">
+          <div className="flex gap-4">
+            <Select value={stageFilter} onValueChange={setStageFilter} className="w-'[180px]'">
               <option value="all">All Stages</option>
               {uniqueStages.map((stage) => (
                 <option key={stage} value={stage}>
                   {stage}
                 </option>
               ))}
-            </Select>
+            </Select>        
+            <Button 
+              onClick={() => setCreating(true)} 
+              variant="secondary"
+              className="flex items-center gap-2 w-full"
+            >
+              <Plus className="w-4 h-4" /> Add Job
+            </Button>
           </div>
-  
-          <Button 
-            onClick={() => setCreating(true)} 
-            className="flex items-center gap-2 w-full md:w-auto"
-          >
-            <Plus className="w-4 h-4" /> Add Job
-          </Button>
         </div>
   
         {/* Create New Job Form - Used Card and blue-50 background for visual style */}
@@ -167,8 +167,35 @@ export default function JobsContent() {
                     <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">{job.name}</CardTitle>
                   )}
                   
-                  {/* Action Buttons are moved to the header and hidden until hover for a cleaner look */}
-                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  
+                </CardHeader>
+  
+                <CardContent className="space-y-2 p-4 pt-0 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Company:</span> {job.company}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Tag className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Role:</span> {job.role}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Workflow className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Stage:</span> <span className="text-blue-600 font-semibold">{job.stage}</span></p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
+                    <p className="truncate"><span className="font-medium text-gray-800">Location:</span> {job.location}</p>
+                  </div>
+                  {job.pipelineName && (
+                    <div className="flex items-center gap-2">
+                      <LayoutDashboard className="w-4 h-4 text-gray-400 shrink-0" />
+                      <p className="truncate"><span className="font-medium text-gray-800">Pipeline:</span> {job.pipelineName}</p>
+                    </div>
+                  )}
+                </CardContent>
+                {/* Action Buttons are moved to the header and hidden until hover for a cleaner look */}
+                <div className="flex justify-end gap-1 p-4 pt-0 opacity-0 group-hover:opacity-100 transition-opacity">
                     {editingId === job.id ? (
                       <Button
                         size="sm"
@@ -199,32 +226,6 @@ export default function JobsContent() {
                       <Trash2 className="w-4 h-4 text-gray-500 hover:text-red-500" />
                     </Button>
                   </div>
-                </CardHeader>
-  
-                <CardContent className="space-y-2 p-4 pt-0 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Briefcase className="w-4 h-4 text-gray-400 shrink-0" />
-                    <p className="truncate"><span className="font-medium text-gray-800">Company:</span> {job.company}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Tag className="w-4 h-4 text-gray-400 shrink-0" />
-                    <p className="truncate"><span className="font-medium text-gray-800">Role:</span> {job.role}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Workflow className="w-4 h-4 text-gray-400 shrink-0" />
-                    <p className="truncate"><span className="font-medium text-gray-800">Stage:</span> <span className="text-blue-600 font-semibold">{job.stage}</span></p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
-                    <p className="truncate"><span className="font-medium text-gray-800">Location:</span> {job.location}</p>
-                  </div>
-                  {job.pipelineName && (
-                    <div className="flex items-center gap-2">
-                      <LayoutDashboard className="w-4 h-4 text-gray-400 shrink-0" />
-                      <p className="truncate"><span className="font-medium text-gray-800">Pipeline:</span> {job.pipelineName}</p>
-                    </div>
-                  )}
-                </CardContent>
               </Card>
             ))}
           </div>
