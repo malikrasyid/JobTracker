@@ -6,13 +6,12 @@ import { usePipelineStore } from "../../services/store";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
-import { Loader2, Briefcase } from "lucide-react";
+import { Loader2, Briefcase, Search } from "lucide-react";
 
 export default function DashboardContent() {
   const { jobs, loading: jobLoading, error: jobError, fetchJobs } = useJobStore();
   const { pipelines, loading: pipeLoading, error: pipeError, fetchPipelines } = usePipelineStore();
 
-  // local filters
   const [search, setSearch] = useState("");
   const [stageFilter, setStageFilter] = useState("all");
   const [pipelineFilter, setPipelineFilter] = useState("all");
@@ -55,12 +54,15 @@ export default function DashboardContent() {
     <div className="space-y-6">      
       {/* Filter Bar */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
-        <Input
-          placeholder="Search job title..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="md:flex-1 w-full bg-white"
-        />
+        <div className="relative w-full md:flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <Input
+            placeholder="Search job title..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 bg-white"
+          />
+        </div>
 
         <div className="flex gap-4">
         {/* Stage Filter (Using the exported Select which is a native select with updated styles) */}

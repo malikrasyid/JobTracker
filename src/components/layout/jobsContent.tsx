@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useJobStore } from "../../services/store";
-import { Loader2, Plus, Edit2, Trash2, Briefcase, MapPin, Tag, Workflow, LayoutDashboard } from "lucide-react";
+import { Loader2, Plus, Edit2, Trash2, Briefcase, MapPin, Tag, Workflow, LayoutDashboard, Search } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
+import { Modal } from "../ui/modal";
 
 export default function JobsContent() {
   const {
@@ -92,14 +93,70 @@ export default function JobsContent() {
 
     return (
       <div className="space-y-6">
+        {/* Modal for Creating New Job */}
+        <Modal isOpen={creating} onClose={() => setCreating(false)}>
+          <h3 className="text-xl font-semibold mb-6 text-blue-700">New Job Application</h3>
+          <div className="space-y-4">
+            {/* Job Name */}
+            <div>
+              <label htmlFor="job-name" className="block text-sm font-medium text-gray-700 mb-1">Job Name</label>
+              <Input id="job-name" placeholder="Name or Title" value={newJob.name}
+                onChange={(e) => setNewJob({ ...newJob, name: e.target.value })} />
+            </div>
+
+            {/* Company */}
+            <div>
+              <label htmlFor="job-company" className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+              <Input id="job-company" placeholder="Company Name" value={newJob.company}
+                onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
+            </div>
+
+            {/* Role */}
+            <div>
+              <label htmlFor="job-role" className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+              <Input id="job-role" placeholder="e.g., Senior Developer" value={newJob.role}
+                onChange={(e) => setNewJob({ ...newJob, role: e.target.value })} />
+            </div>
+
+            {/* Location */}
+            <div>
+              <label htmlFor="job-location" className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+              <Input id="job-location" placeholder="e.g., Remote, San Francisco" value={newJob.location}
+                onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
+            </div>
+
+            {/* Stage */}
+            <div>
+              <label htmlFor="job-stage" className="block text-sm font-medium text-gray-700 mb-1">Current Stage</label>
+              <Input id="job-stage" placeholder="e.g., Applied, Interviewing" value={newJob.stage}
+                onChange={(e) => setNewJob({ ...newJob, stage: e.target.value })} />
+            </div>
+
+            {/* Source */}
+            <div>
+              <label htmlFor="job-source" className="block text-sm font-medium text-gray-700 mb-1">Source</label>
+              <Input id="job-source" placeholder="e.g., LinkedIn, Referral" value={newJob.source}
+                onChange={(e) => setNewJob({ ...newJob, source: e.target.value })} />
+            </div>
+          </div>
+          
+          <div className="flex justify-end gap-3 mt-6">
+            <Button variant="outline" onClick={() => setCreating(false)}>Cancel</Button>
+            <Button onClick={handleCreate}>Save Job</Button>
+          </div>
+        </Modal>
+
         {/* Filters & Add Button */}
         <div className="flex flex-col md:flex-row md:justify-start md:items-center gap-4 bg-gray-50 rounded-xl">
+          <div className="relative w-full md:flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
             <Input
               placeholder="Search by job name..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-white md:flex-1"
+              className="w-full bg-white pl-10"
             />
+          </div>
           <div className="flex gap-4">
             <Select value={stageFilter} onValueChange={setStageFilter} className="w-'[180px]'">
               <option value="all">All Stages</option>
@@ -118,31 +175,6 @@ export default function JobsContent() {
             </Button>
           </div>
         </div>
-  
-        {/* Create New Job Form - Used Card and blue-50 background for visual style */}
-        {creating && (
-          <Card className="p-6 bg-blue-50/50 border-blue-200">
-            <h3 className="text-xl font-semibold mb-4 text-blue-700">New Job Application</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Input placeholder="Job Name" value={newJob.name}
-                onChange={(e) => setNewJob({ ...newJob, name: e.target.value })} />
-              <Input placeholder="Company" value={newJob.company}
-                onChange={(e) => setNewJob({ ...newJob, company: e.target.value })} />
-              <Input placeholder="Role" value={newJob.role}
-                onChange={(e) => setNewJob({ ...newJob, role: e.target.value })} />
-              <Input placeholder="Location" value={newJob.location}
-                onChange={(e) => setNewJob({ ...newJob, location: e.target.value })} />
-              <Input placeholder="Stage" value={newJob.stage}
-                onChange={(e) => setNewJob({ ...newJob, stage: e.target.value })} />
-              <Input placeholder="Source" value={newJob.source}
-                onChange={(e) => setNewJob({ ...newJob, source: e.target.value })} />
-            </div>
-            <div className="flex justify-end gap-3 mt-6">
-              <Button variant="outline" onClick={() => setCreating(false)}>Cancel</Button>
-              <Button onClick={handleCreate}>Save Job</Button>
-            </div>
-          </Card>
-        )}
   
         {/* Job Cards */}
         {filteredJobs.length === 0 ? (
@@ -170,7 +202,7 @@ export default function JobsContent() {
                   
                 </CardHeader>
   
-                <CardContent className="space-y-2 p-4 pt-0 text-sm text-gray-600">
+                <CardContent className="space-y-2 p-4 pt-0 pb-0 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
                     <Briefcase className="w-4 h-4 text-gray-400 shrink-0" />
                     <p className="truncate"><span className="font-medium text-gray-800">Company:</span> {job.company}</p>
@@ -195,7 +227,7 @@ export default function JobsContent() {
                   )}
                 </CardContent>
                 {/* Action Buttons are moved to the header and hidden until hover for a cleaner look */}
-                <div className="flex justify-end gap-1 p-4 pt-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex justify-end gap-1 p-4 pt-1 pb-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     {editingId === job.id ? (
                       <Button
                         size="sm"
