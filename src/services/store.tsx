@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import * as api from './api';
 
-interface Job {
+export interface Job {
   id: string;
   userId: string;
   pipelineId: string;
@@ -19,7 +19,7 @@ interface Job {
   updatedAt: string;
 }
 
-interface Pipeline {
+export interface Pipeline {
   id: string;
   userId: string;
   name: string;

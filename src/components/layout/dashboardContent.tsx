@@ -6,7 +6,8 @@ import { usePipelineStore } from "../../services/store";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
-import { Loader2, Briefcase, Search } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { Loader2, Briefcase, Search, Zap, Target } from "lucide-react";
 
 export default function DashboardContent() {
   const { jobs, loading: jobLoading, error: jobError, fetchJobs } = useJobStore();
@@ -34,6 +35,25 @@ export default function DashboardContent() {
     });
   }, [jobs, search, stageFilter, pipelineFilter]);
 
+  const uniqueStages = Array.from(new Set(jobs.map((j) => j.stage)));
+
+  const { totalJobs, totalPipelines, jobsByStageData } = useMemo(() => {
+    const totalJobs = jobs.length;
+    const totalPipelines = pipelines.length;
+
+    const jobsByStageMap = jobs.reduce((acc, job) => {
+      acc[job.stage] = (acc[job.stage] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const jobsByStageData = Object.entries(jobsByStageMap).map(([stage, count]) => ({
+      stage,
+      count,
+    }));
+
+    return { totalJobs, totalPipelines, jobsByStageData };
+  }, [jobs, pipelines]);
+  
   if (jobLoading || pipeLoading)
     return (
       <div className="flex justify-center items-center h-64">
@@ -48,10 +68,76 @@ export default function DashboardContent() {
       </div>
     );
 
-  const uniqueStages = Array.from(new Set(jobs.map((j) => j.stage)));
+
 
   return (
-    <div className="space-y-6">      
+    <div className="space-y-6">
+
+      {/* 📊 Key Metrics Counters */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Total Jobs Metric */}
+        <Card>
+          <CardHeader className="flex-row items-center justify-between">
+            <CardTitle className="text-base font-semibold text-gray-700">Total Applications</CardTitle>
+            <Zap className="w-6 h-6 text-blue-600" />
+          </CardHeader>
+          <CardContent className="pt-0">
+            <p className="text-3xl font-bold text-gray-900">{totalJobs}</p>
+          </CardContent>
+        </Card>
+
+        {/* Total Pipelines Metric */}
+        <Card>
+          <CardHeader className="flex-row items-center justify-between">
+            <CardTitle className="text-base font-semibold text-gray-700">Active Pipelines</CardTitle>
+            <Target className="w-6 h-6 text-green-600" />
+          </CardHeader>
+          <CardContent className="pt-0">
+            <p className="text-3xl font-bold text-gray-900">{totalPipelines}</p>
+          </CardContent>
+        </Card>
+
+        {/* Average Stage Time (Placeholder for illustration) */}
+        <Card>
+          <CardHeader className="flex-row items-center justify-between">
+            <CardTitle className="text-base font-semibold text-gray-700">Avg. Stage Time</CardTitle>
+            <Loader2 className="w-6 h-6 text-yellow-600" />
+          </CardHeader>
+          <CardContent className="pt-0">
+            <p className="text-3xl font-bold text-gray-900">~14 Days</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* 📈 Jobs By Stage Chart */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-gray-700">Applications by Stage</h2>
+        <Card className="p-4 h-96">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={jobsByStageData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+              <XAxis dataKey="stage" stroke="#6b7280" angle={-15} textAnchor="end" height={45} />
+              <YAxis allowDecimals={false} stroke="#6b7280" />
+              <Tooltip 
+                cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }} 
+                contentStyle={{ 
+                  borderRadius: '0.5rem', 
+                  border: '1px solid #e5e7eb', 
+                  backgroundColor: '#ffffff' 
+                }} 
+              />
+              <Legend />
+              <Bar 
+                dataKey="count" 
+                name="Job Count" 
+                fill="#3b82f6" 
+                radius={[4, 4, 0, 0]} // Rounded tops
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
+      </section>
+            
       {/* Filter Bar */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-start gap-4 rounded-xl">
         <div className="relative w-full md:flex-1">

@@ -1,11 +1,11 @@
 import { useAuthStore, useUIStore } from "../../services/store";
-import { LogOut, Bell, User, Menu, X } from "lucide-react";
+import { LogOut, Bell, User, Menu} from "lucide-react";
 import logo from "../../assets/jobtracker_logo.png";
 import "./layout.css";
 
 const TopBar= () => {
   const { user, logout } = useAuthStore();
-  const {toggleSidebar, sidebarOpen}: any = useUIStore();
+  const {toggleSidebar}: any = useUIStore();
 
   return (
     <header className={`fixed top-0 left-0 w-full z-40 
