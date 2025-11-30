@@ -33,24 +33,28 @@ export const Button: React.FC<ButtonProps> = ({
 
   switch (variant) {
     case "primary":
+      // Warna Biru Utama dengan Teks Putih (Overriding bg-transparent dengan bg-blue-600)
       variantStyles =
-        "bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-600";
+        "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500";
       break;
     case "secondary":
+      // Warna Abu-abu Netral dengan Teks Gelap (Overriding bg-transparent dengan bg-gray-200)
       variantStyles =
-        "bg-blue-100 text-gray-800 hover:bg-blue-200 focus:ring-blue-300";
+        "bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400";
       break;
     case "outline":
+      // Outline Abu-abu dengan Latar Belakang Transparan dan Teks Gelap. Harus menetapkan ulang border.
       variantStyles =
-        "border border-blue-300 text-gray-800 hover:bg-gray-50 focus:ring-blue-500";
+        "border border-gray-400 text-gray-800 hover:bg-gray-100 focus:ring-gray-400";
       break;
     case "ghost":
+      // Tetap transparan
       variantStyles =
-        "bg-transparent text-gray-800 hover:bg-gray-50/50 focus:ring-blue-300";
+        "bg-transparent text-gray-800 hover:bg-gray-50 focus:ring-gray-300";
       break;
     default:
       variantStyles =
-        "bg-blue-700 text-white hover:bg-blue-800 focus:ring-blue-600";
+        "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500";
   }
 
   return (

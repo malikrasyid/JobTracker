@@ -75,7 +75,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className={`mt-4 bg-blue-600 text-gray-600 font-semibold rounded-lg py-3 transition-all hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 ${
+          className={`mt-4 bg-blue-600 text-white font-semibold rounded-lg py-3 transition-all hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 ${
             loading ? "opacity-70 cursor-not-allowed" : ""
           }`}
         >

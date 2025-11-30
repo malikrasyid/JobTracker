@@ -160,7 +160,7 @@ export default function PipelineContent() {
                   onChange={(e) => setCurrentStageInput(e.target.value)}
                   onKeyDown={(e) => handleStageInputKeyDown(e, setStages, stages)}
                 />
-                <Button onClick={() => handleAddStage(currentStageInput, setStages, stages)} variant="secondary" className="shrink-0">
+                <Button onClick={() => handleAddStage(currentStageInput, setStages, stages)} variant="primary" className="shrink-0">
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useJobStore, type Job } from "../../services/store";
-import { Loader2, Plus, Edit2, Trash2, Briefcase, MapPin, Tag, Workflow, LayoutDashboard, Search } from "lucide-react";
+import { Loader2, Plus, Trash2, Briefcase, MapPin, Tag, Workflow, LayoutDashboard, Search } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -37,7 +37,7 @@ export default function JobsContent() {
     source: "",
   });
 
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId] = useState<string | null>(null);
   const [editingJob, setEditingJob] = useState<any>(null);
 
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
@@ -304,7 +304,7 @@ export default function JobsContent() {
             </Select>        
             <Button 
               onClick={() => setCreating(true)} 
-              variant="secondary"
+              variant="primary"
               className="flex items-center gap-2 w-full"
             >
               <Plus className="w-4 h-4" /> Add Job
