@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { usePipelineStore, type Pipeline } from "../../services/store";
-import { Loader2, Plus, Trash2, Edit2, Search, X } from "lucide-react";
+import { Loader2, Plus, Trash2, Search, X } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";

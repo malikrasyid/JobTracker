@@ -1,48 +1,42 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useJobStore } from "../../services/store";
 import { usePipelineStore } from "../../services/store";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { Input } from "../ui/input";
-import { Select } from "../ui/select";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Loader2, Briefcase, Search, Zap, Target, Clock, ClipboardList } from "lucide-react";
+import { Loader2, Zap, Target } from "lucide-react";
 
 // Colors for the Pie Chart slices
 const PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#6366f1', '#06b6d4'];
-// Alias icons to prevent crash if old lucide-react version is used
-const ZapIcon = Zap;
-const TargetIcon = Target;
-const ClockIcon = Clock;
 
 export default function DashboardContent() {
   const { jobs, loading: jobLoading, error: jobError, fetchJobs } = useJobStore();
   const { pipelines, loading: pipeLoading, error: pipeError, fetchPipelines } = usePipelineStore();
 
-  const [search, setSearch] = useState("");
-  const [stageFilter, setStageFilter] = useState("all");
-  const [pipelineFilter, setPipelineFilter] = useState("all");
+  // const [search] = useState("");
+  // const [stageFilter] = useState("all");
+  // const [pipelineFilter] = useState("all");
 
   useEffect(() => {
     fetchJobs();
     fetchPipelines();
   }, [fetchJobs, fetchPipelines]);
 
-  const filteredJobs = useMemo(() => {
-    return jobs.filter((job) => {
-      const matchesSearch = job.name.toLowerCase().includes(search.toLowerCase());
-      const matchesStage = stageFilter === "all" || job.stage === stageFilter;
-      const matchesPipeline =
-        pipelineFilter === "all" ||
-        job.pipelineId === pipelineFilter ||
-        job.pipelineName === pipelineFilter;
+  // const filteredJobs = useMemo(() => {
+  //   return jobs.filter((job) => {
+  //     const matchesSearch = job.name.toLowerCase().includes(search.toLowerCase());
+  //     const matchesStage = stageFilter === "all" || job.stage === stageFilter;
+  //     const matchesPipeline =
+  //       pipelineFilter === "all" ||
+  //       job.pipelineId === pipelineFilter ||
+  //       job.pipelineName === pipelineFilter;
 
-      return matchesSearch && matchesStage && matchesPipeline;
-    });
-  }, [jobs, search, stageFilter, pipelineFilter]);
+  //     return matchesSearch && matchesStage && matchesPipeline;
+  //   });
+  // }, [jobs, search, stageFilter, pipelineFilter]);
 
-  const uniqueStages = Array.from(new Set(jobs.map((j) => j.stage)));
+  // const uniqueStages = Array.from(new Set(jobs.map((j) => j.stage)));
 
   const { totalJobs, totalPipelines, jobsByStageData, mostRecentJobs} = useMemo(() => {
     const totalJobs = jobs.length;
@@ -141,7 +135,7 @@ export default function DashboardContent() {
                             labelLine={false}
                             label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                         >
-                            {jobsByStageData.map((entry, index) => (
+                            {jobsByStageData.map((_, index) => (
                                 <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                             ))}
                         </Pie>
