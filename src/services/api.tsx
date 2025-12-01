@@ -3,9 +3,10 @@ import { useAuthStore } from "./store";
 const API_BASE_URL = 'import.meta.env.VITE_PUBLIC_API_BASE_URL';
 
 // Helper for fetch requests
-async function request(url: string, options?: RequestInit) {
+async function request(path: string, options?: RequestInit) {
     const { token } = useAuthStore.getState();
 
+    const url = new URL(path, API_BASE_URL).toString();
     const headers = {
         ...(options?.headers || {}),
         'Content-Type': 'application/json',
@@ -22,53 +23,53 @@ async function request(url: string, options?: RequestInit) {
 }
 
 // Jobs APIs
-export const getJobs = () => request(`${API_BASE_URL}/jobs`);
+export const getJobs = () => request(`/jobs`);
 export const getJobsByStage = (stage: string) =>
-    request(`${API_BASE_URL}/jobs/stage/${stage}`);
-export const getJobById = (id: string ) => request(`${API_BASE_URL}/jobs/${id}`);
+    request(`/jobs/stage/${stage}`);
+export const getJobById = (id: string ) => request(`/jobs/${id}`);
 export const createJob = (data: any) =>
-    request(`${API_BASE_URL}/jobs`, {
+    request(`/jobs`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const updateJob = (id: string , data: any) =>
-    request(`${API_BASE_URL}/jobs/${id}`, {
+    request(`/jobs/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const deleteJob = (id: string ) =>
-    request(`${API_BASE_URL}/jobs/${id}`, { method: 'DELETE' });
+    request(`/jobs/${id}`, { method: 'DELETE' });
 
 // Auth APIs
 export const register = (data: any) =>
-    request(`${API_BASE_URL}/auth/register`, {
+    request(`/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const login = (data: any) =>
-    request(`${API_BASE_URL}/auth/login`, {
+    request(`/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 
 // Pipeline APIs
-export const getPipelines = () => request(`${API_BASE_URL}/pipelines`);
-export const getPipelineById = (id: string ) => request(`${API_BASE_URL}/pipelines/${id}`);
+export const getPipelines = () => request(`/pipelines`);
+export const getPipelineById = (id: string ) => request(`/pipelines/${id}`);
 export const createPipeline = (data: any) =>
-    request(`${API_BASE_URL}/pipelines`, {
+    request(`/pipelines`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const updatePipeline = (id: string , data: any) =>
-    request(`${API_BASE_URL}/pipelines/${id}`, {
+    request(`/pipelines/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
     });
 export const deletePipeline = (id: string ) =>
-    request(`${API_BASE_URL}/pipelines/${id}`, { method: 'DELETE' });
+    request(`/pipelines/${id}`, { method: 'DELETE' });
