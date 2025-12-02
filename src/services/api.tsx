@@ -1,12 +1,18 @@
 import { useAuthStore } from "./store";
 
-const API_BASE_URL = 'import.meta.env.VITE_PUBLIC_API_BASE_URL';
+const RAW_API_BASE_URL = (import.meta.env.VITE_PUBLIC_API_BASE_URL as string | undefined);
 
-// Helper for fetch requests
+const API_BASE_URL = RAW_API_BASE_URL?.replace(/\/?$/, '/');
+
 async function request(path: string, options?: RequestInit) {
     const { token } = useAuthStore.getState();
 
-    const url = new URL(path, API_BASE_URL).toString();
+    const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+
+    const url = new URL(cleanPath, API_BASE_URL).toString();
+
+    console.log("Fetching API URL:", url);
+
     const headers = {
         ...(options?.headers || {}),
         'Content-Type': 'application/json',
